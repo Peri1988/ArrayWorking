@@ -1,4 +1,6 @@
-public class Car {
+import java.util.Objects;
+
+public class Car {//implements Comparable {
     private  int speed;
     private int cost;
     private String brand;
@@ -27,6 +29,27 @@ public class Car {
                 "speed=" + speed +
                 ", cost=" + cost +
                 ", brand='" + brand + '\'' +
-                '}';
+                '}' + '\n';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;                                  // Сравниваем ссылки
+        if (o == null || getClass() != o.getClass()) return false;   // Если объекта нет или у объектов разные  классы, возвращаем false
+        if(hashCode() != o.hashCode()) return false;                 // Если хеш-значения неравны, значит объекты неравны
+        Car car = (Car) o;                                           //  Приводим объект к сравниваемому типу
+        return speed == car.speed && cost == car.cost && Objects.equals(brand, car.brand);  // Сравниваем по значениям
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(speed, cost, brand);                    // Получаем числовое значение объекта
+    }
+
+    //  @Override
+    public int compareTo(Object o) {
+        Car car = (Car) o;
+
+        return this.brand.compareTo(car.brand);
     }
 }

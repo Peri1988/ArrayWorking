@@ -4,7 +4,7 @@
  * @data 08.04.2024
  * @version 1
  */
-public class MyArray {
+public class MyArray <T>{
 
     private Object[] array;        // Массив, с которым работаем. TODO Переделать на универсальный код
     private int size;          // Текущий размер массива
@@ -46,7 +46,7 @@ public class MyArray {
      * Метод для добавления элемента в массив
      * @param value добавляемое значение
      */
-    public void add( Object value){
+    public void add(T value){
 
         if(pointer == size){
          increaseMemory();
@@ -74,22 +74,27 @@ public class MyArray {
         }
     }
 
-    public void accessByIndex(int index){
-        if( index < 0 || index > size && index == (int)index){
-            System.out.println("Введите число от 0 до 15");
+    public T accessByIndex(int index){
+        if( index < 0 || index >= pointer){
+            System.out.println("Введите число от 0 до " + (pointer - 1));
         }
         for (int i = index; i ==index; i++) {
             Object value = array[i];
             System.out.println(value);
         }
+        T t = (T) array[index];
+        return t;
     }
 
-    public void findByValue(int value){ // Принимает значение в зависимости от типа массива
-        for (int i = 0; i < array.length; i++) {
-            if( i == value){
-                System.out.println(value);
+    public int findByValue(T value) throws MyArrayException{ // Принимает значение в зависимости от типа массива
+
+        for (int i = 0; i < pointer; i++) {
+            if(array[i].equals(value)){
+               // System.out.println(value);
+                return i;
             }
         }
+       throw new MyArrayException("Значения " + value.toString() + " нет в массвиве" );
     }
 
  /*   public void sortArray(){
